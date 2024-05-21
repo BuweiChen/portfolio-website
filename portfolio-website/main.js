@@ -44,7 +44,7 @@ scene.add(pointLight);
 
 const lightHelper = new THREE.PointLightHelper(pointLight);
 const gridHelper = new THREE.GridHelper(200, 50);
-scene.add(lightHelper, gridHelper);
+// scene.add(lightHelper, gridHelper);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 
@@ -68,11 +68,25 @@ textureEquirec.mapping = THREE.EquirectangularReflectionMapping;
 textureEquirec.colorSpace = THREE.SRGBColorSpace;
 scene.background = textureEquirec;
 
+// Avatar
+
+const buweiTexture = textureLoader.load("buwei.png");
+const buwei = new THREE.Mesh(
+  new THREE.BoxGeometry(4, 4, 4),
+  new THREE.MeshBasicMaterial({ map: buweiTexture })
+);
+
+scene.add(buwei);
+
 function animate() {
   requestAnimationFrame(animate);
   torus.rotation.x += 0.01;
   torus.rotation.y += 0.005;
   torus.rotation.z += 0.01;
+
+  buwei.rotation.x -= 0.01;
+  buwei.rotation.y -= 0.005;
+  buwei.rotation.z -= 0.01;
 
   controls.update();
 
