@@ -1,7 +1,7 @@
-import { Wireframe } from "three/examples/jsm/Addons.js";
 import "./style.css";
 
 import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/Addons.js";
 
 const scene = new THREE.Scene();
 
@@ -37,19 +37,25 @@ const torus = new THREE.Mesh(geometry, material);
 
 scene.add(torus);
 
-const pointLight = new THREE.PointLight(0xffffff, 1000);
-pointLight.position.set(10, 10, 10);
+const pointLight = new THREE.PointLight(0xffffff, 2000);
+pointLight.position.set(20, 20, 20);
 
 scene.add(pointLight);
 
 const lightHelper = new THREE.PointLightHelper(pointLight);
-scene.add(lightHelper);
+const gridHelper = new THREE.GridHelper(200, 50);
+scene.add(lightHelper, gridHelper);
+
+const controls = new OrbitControls(camera, renderer.domElement);
 
 function animate() {
   requestAnimationFrame(animate);
   torus.rotation.x += 0.01;
   torus.rotation.y += 0.005;
   torus.rotation.z += 0.01;
+
+  controls.update();
+
   renderer.render(scene, camera);
 }
 
