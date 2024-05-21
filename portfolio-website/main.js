@@ -62,6 +62,12 @@ function addStar() {
 
 Array(200).fill().forEach(addStar);
 
+const textureLoader = new THREE.TextureLoader();
+let textureEquirec = textureLoader.load("starmap_2020_4k.jpeg");
+textureEquirec.mapping = THREE.EquirectangularReflectionMapping;
+textureEquirec.colorSpace = THREE.SRGBColorSpace;
+scene.background = textureEquirec;
+
 function animate() {
   requestAnimationFrame(animate);
   torus.rotation.x += 0.01;
