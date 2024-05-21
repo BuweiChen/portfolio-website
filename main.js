@@ -63,14 +63,14 @@ function addStar() {
 Array(200).fill().forEach(addStar);
 
 const textureLoader = new THREE.TextureLoader();
-let textureEquirec = textureLoader.load("starmap_2020_4k.jpeg");
+let textureEquirec = textureLoader.load("public/starmap_2020_4k.jpeg");
 textureEquirec.mapping = THREE.EquirectangularReflectionMapping;
 textureEquirec.colorSpace = THREE.SRGBColorSpace;
 scene.background = textureEquirec;
 
 // Avatar
 
-const buweiTexture = textureLoader.load("buwei.png");
+const buweiTexture = textureLoader.load("public/buwei.png");
 const buwei = new THREE.Mesh(
   new THREE.BoxGeometry(4, 4, 4),
   new THREE.MeshBasicMaterial({ map: buweiTexture })
