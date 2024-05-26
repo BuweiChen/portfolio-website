@@ -12,8 +12,10 @@ const camera = new THREE.PerspectiveCamera(
   1000
 );
 
+const canvas = document.querySelector("#bg");
+
 const renderer = new THREE.WebGLRenderer({
-  canvas: document.querySelector("#bg"),
+  canvas: canvas,
 });
 
 renderer.setPixelRatio(window.devicePixelRatio);
@@ -101,4 +103,10 @@ window.addEventListener("resize", () => {
   camera.updateProjectionMatrix();
 });
 
-
+window.addEventListener("dblclick", () => {
+  if (!document.fullscreenElement) {
+    canvas.requestFullscreen();
+  } else {
+    document.exitFullscreen();
+  }
+});
