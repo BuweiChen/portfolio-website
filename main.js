@@ -2,6 +2,11 @@ import "./style.css";
 
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
+import GUI from "lil-gui";
+import { debug } from "openai/core.mjs";
+import gsap from "gsap";
+
+const debugObject = {};
 
 const scene = new THREE.Scene();
 
@@ -31,8 +36,12 @@ const geometry = new THREE.TorusGeometry(10, 3, 16, 100);
 //   wireframe: true,
 // }); // basic = no light source required
 
+debugObject.color = 0xff6347;
+debugObject.wireframe = false;
+
 const material = new THREE.MeshStandardMaterial({
-  color: 0xff6347,
+  color: debugObject.color,
+  wireframe: debugObject.wireframe,
 });
 
 const torus = new THREE.Mesh(geometry, material);
@@ -110,3 +119,26 @@ window.addEventListener("dblclick", () => {
     document.exitFullscreen();
   }
 });
+
+// Debug
+const gui = new GUI({
+  title: "debug",
+  closeFolders: true,
+});
+
+gui.add(torus, "visible");
+gui.add(debugObject, "wireframe").onChange(() => {
+  material.wireframe = debugObject.wireframe;
+});
+gui.addColor(debugObject, "color").onChange(() => {
+  material.color.set(debugObject.color);
+});
+
+debugObject.spin = () => {
+  gsap.to(torus.rotation, {
+    duration: 1,
+    y: torus.rotation.y + Math.PI * 2,
+  });
+};
+
+gui.add(debugObject, "spin");
