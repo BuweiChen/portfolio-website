@@ -39,10 +39,17 @@ const geometry = new THREE.TorusGeometry(10, 3, 16, 100);
 debugObject.color = 0xff6347;
 debugObject.wireframe = false;
 
-const material = new THREE.MeshStandardMaterial({
-  color: debugObject.color,
-  wireframe: debugObject.wireframe,
-});
+// const material = new THREE.MeshStandardMaterial({
+//   color: debugObject.color,
+//   wireframe: debugObject.wireframe,
+// });
+
+const material = new THREE.MeshPhysicalMaterial();
+material.metalness = 0;
+material.roughness = 0;
+material.transmission = 0.999;
+material.ior = 2.417; // diamond ior
+material.thickness = 2.5;
 
 const torus = new THREE.Mesh(geometry, material);
 
@@ -130,9 +137,9 @@ gui.add(torus, "visible");
 gui.add(debugObject, "wireframe").onChange(() => {
   material.wireframe = debugObject.wireframe;
 });
-gui.addColor(debugObject, "color").onChange(() => {
-  material.color.set(debugObject.color);
-});
+// gui.addColor(debugObject, "color").onChange(() => {
+//   material.color.set(debugObject.color);
+// });
 
 debugObject.spin = () => {
   gsap.to(torus.rotation, {
@@ -142,3 +149,8 @@ debugObject.spin = () => {
 };
 
 gui.add(debugObject, "spin");
+gui.add(material, "metalness").min(0).max(1).step(0.0001);
+gui.add(material, "roughness").min(0).max(1).step(0.0001);
+gui.add(material, "transmission").min(0).max(1).step(0.0001);
+gui.add(material, "ior").min(0).max(10).step(0.0001);
+gui.add(material, "thickness").min(0).max(10).step(0.0001);
